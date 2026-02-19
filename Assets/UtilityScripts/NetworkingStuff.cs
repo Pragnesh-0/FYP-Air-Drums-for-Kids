@@ -35,8 +35,8 @@ public static class NetworkingStuff
             var response = await client.GetAsync("http://"+ipAddress+"/get_music/"+name);
             if (response == null) return false;
             Stream stream = await response.Content.ReadAsStreamAsync();
-            ZipArchive archive = new(stream, ZipArchiveMode.Read);
-            if (archive == null) return false;
+            ZipArchive archive = new(stream, ZipArchiveMode.Read, true);
+            if (archive == null){ stream.Close(); return false; }
             if (archive.Entries.Count != 2)
             {
                 archive.Dispose();
@@ -59,8 +59,9 @@ public static class NetworkingStuff
             stream.Close();
             archive.Dispose();
         }
-        catch(HttpRequestException e){
+        catch(HttpRequestException e) {
             Debug.Log(e);
+            return false;
         }
         return true;
     }
