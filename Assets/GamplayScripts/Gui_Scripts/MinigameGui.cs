@@ -19,7 +19,7 @@ public class MinigameGui : MonoBehaviour
 
     void Start()
     {
-        back.onClick.AddListener(delegate{libraryPop.gameObject.SetActive(false); connectionPanel.GetComponent<ConnectionGui>().cancelConnection(); gms.selectGui("MainMenu");});
+        back.onClick.AddListener(delegate{backUp();});
         connection.onClick.AddListener(delegate{connectionGui();});
         library.onClick.AddListener(delegate{musicSelectorGui();});
     }
@@ -29,13 +29,14 @@ public class MinigameGui : MonoBehaviour
     {
         musicPanel.gameObject.SetActive(false);
         connectionPanel.gameObject.SetActive(true);
+        libraryPop.GetComponent<LibraryPopGui>().resetGui();
         libraryPop.gameObject.SetActive(true);
     }
 
     public void musicSelectorGui()
     {
         connectionPanel.gameObject.SetActive(false);
-        connectionPanel.GetComponent<ConnectionGui>().cancelConnection();
+        connectionPanel.GetComponent<ConnectionGui>().cancelOperations();
         musicPanel.gameObject.SetActive(true);
         libraryPop.gameObject.GetComponent<LibraryPopGui>().loadFromFiles(delegate(string val){addToSelector(val);});
         libraryPop.gameObject.SetActive(true);
@@ -44,5 +45,14 @@ public class MinigameGui : MonoBehaviour
     void addToSelector(string val)
     {
         musicPanel.GetComponent<SelectorGui>().selectSong(val);
+    }
+
+    void backUp()
+    {
+        musicPanel.gameObject.SetActive(false);
+        connectionPanel.gameObject.SetActive(false);
+        libraryPop.gameObject.SetActive(false); 
+        connectionPanel.GetComponent<ConnectionGui>().cancelOperations();
+        gms.selectGui("MainMenu");
     }
 }

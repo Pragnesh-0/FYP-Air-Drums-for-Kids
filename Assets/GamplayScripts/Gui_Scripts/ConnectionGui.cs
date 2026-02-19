@@ -113,9 +113,10 @@ public class ConnectionGui : MonoBehaviour
         output.texture = null;
     }
 
-    public void cancelConnection()
+    public void cancelOperations()
     {
         popGui.cancelConnection();
+        stopqrReader();
     }
 
 }
