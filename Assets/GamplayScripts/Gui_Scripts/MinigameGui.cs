@@ -29,7 +29,6 @@ public class MinigameGui : MonoBehaviour
     {
         musicPanel.gameObject.SetActive(false);
         connectionPanel.gameObject.SetActive(true);
-        connectionPanel.GetComponent<ConnectionGui>().localConnect();
         libraryPop.gameObject.SetActive(true);
     }
 
@@ -44,6 +43,6 @@ public class MinigameGui : MonoBehaviour
 
     void addToSelector(string val)
     {
-        print("Do thing with "+val);
+        musicPanel.GetComponent<SelectorGui>().selectSong(val);
     }
 }

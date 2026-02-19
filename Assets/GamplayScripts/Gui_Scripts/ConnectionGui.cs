@@ -99,7 +99,7 @@ public class ConnectionGui : MonoBehaviour
                     ct = new WebCamTexture(device.name,256,256);
                 }
             }
-            if(!ct){ct = new WebCamTexture(256,256); print(ct);};
+            if(!ct){ct = new WebCamTexture(256,256); };
             ct.Play();
         }
     }
