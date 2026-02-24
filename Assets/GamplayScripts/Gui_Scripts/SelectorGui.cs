@@ -11,12 +11,8 @@ public class SelectorGui : MonoBehaviour
     public TextMeshProUGUI score;
     public TextMeshProUGUI musicName;
 
-
     public GameObject libraryPop;
-
-
     public GuiMenuSelector gms;
-
 
 
     public MinigameLogic mgl;
@@ -38,7 +34,7 @@ public class SelectorGui : MonoBehaviour
         }
         score.SetText(bmp.score.ToString());
         musicName.SetText(file_name);
-        mgl.initalize(bmp, file_name);
+        mgl.initalize(bmp, file_name , delegate{selectSong(n);});
         return true;
     }
 
@@ -47,6 +43,7 @@ public class SelectorGui : MonoBehaviour
     {
         libraryPop.SetActive(false);
         gms.selectGui("MinigamePlayer");
+        mgl.playMinigame();
     }
 
 }

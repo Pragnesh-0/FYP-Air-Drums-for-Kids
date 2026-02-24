@@ -1,23 +1,27 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using TMPro;
+using System;
 public class MinigameLogic : MonoBehaviour
 {
-
     public bool isActive = false;
 
-    public string songName;
+    Action resetBeats;
 
+    public string songName;
     public int currentScore = 0;
     public List<BeatData> beats = new List<BeatData>();
-
     public Dictionary<BeatData,List<GameObject>> beatsDict = new Dictionary<BeatData, List<GameObject>>();
 
-    public TextMeshProUGUI scoreLabel;
 
 
+    public MinigamePlayerGui playerGui;
+    public PlaneKit drumPlayer;
     public AudioSource musicPlayer;
+
+    void Start()
+    {
+        playerGui.setCloseCallback(delegate{resetVals();});
+    }
 
     void Update()
     {
@@ -26,13 +30,16 @@ public class MinigameLogic : MonoBehaviour
             return;
         }
 
-        int index = 0;
+        int index = -1;
+        int indexToRemove = -1;
 
         foreach (var beat in beats)
         {
             index += 1;
             if (getAudioSourceTime() >= beat.time - 0.8f)
             {
+                indexToRemove = index;
+                print(getAudioSourceTime());
                 List<GameObject> gms = new List<GameObject>();
                 //spawn item
                 beatsDict.Add(beat, gms);
@@ -40,13 +47,17 @@ public class MinigameLogic : MonoBehaviour
             }
         }
 
-        beats.RemoveAt(index);
+        if (indexToRemove != -1)
+        {
+            beats.RemoveAt(indexToRemove);
+        }
+            
 
-        if (!musicPlayer.isPlaying)
+        if (!musicPlayer.isPlaying && beats.Count == 0)
         {
             isActive = false;
             saveScore();
-            //transition
+            playerGui.finished();
         }
     }
 
@@ -62,13 +73,28 @@ public class MinigameLogic : MonoBehaviour
         beats = new List<BeatData>();
         beatsDict = new Dictionary<BeatData, List<GameObject>>();
         currentScore = 0;
+        if(resetBeats != null)
+        {
+            resetBeats();
+            resetBeats = null;
+        }
     }
 
-    public void initalize(BeatmapModels bmp, string name)
+    public void initalize(BeatmapModels bmp, string name , Action resetBeat)
     {
         beats = bmp.beats;
         songName = name;
         //scoreLabel.SetText("");
+
+        resetBeats = resetBeat;
+    }
+
+    public async void playMinigame()
+    {
+        await playerGui.countDown();
+        //drumPlayer.setValues(true);
+        musicPlayer.Play();
+        isActive = true;
     }
 
     public void drumHit(string dType)
