@@ -37,14 +37,14 @@ public class MinigameGui : MonoBehaviour
     {
         connectionPanel.gameObject.SetActive(false);
         connectionPanel.GetComponent<ConnectionGui>().cancelOperations();
-        musicPanel.gameObject.SetActive(true);
         libraryPop.gameObject.GetComponent<LibraryPopGui>().loadFromFiles(delegate(string val){addToSelector(val);});
         libraryPop.gameObject.SetActive(true);
     }
 
-    void addToSelector(string val)
+    public void addToSelector(string val)
     {
-        musicPanel.GetComponent<SelectorGui>().selectSong(val);
+        bool value = musicPanel.GetComponent<SelectorGui>().selectSong(val);
+        musicPanel.gameObject.SetActive(value);
     }
 
     void backUp()
