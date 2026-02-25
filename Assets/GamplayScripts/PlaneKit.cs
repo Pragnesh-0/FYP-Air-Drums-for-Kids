@@ -2,12 +2,16 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine.UI;
+using System;
 
 public class PlaneKit : MonoBehaviour
 {
     public GameObject equippedKit;
 
     public ComputerVisionDetection cvd;
+
+
+    public Action<string> minigameCallBack;
 
 
     public List<GameObject> drumObjects;
@@ -34,6 +38,28 @@ public class PlaneKit : MonoBehaviour
         isGamemode = false;
     }
 
+    public void setOnHitCallback(Action<string> setOnHitCallback)
+    {
+        minigameCallBack = setOnHitCallback;
+    }
+
+
+    public List<Vector2> getPositions(string drumType)
+    {
+        int index = -1;
+        List<Vector2> myList = new List<Vector2>();
+        foreach (GameObject obj in drumObjects)
+        {
+            index += 1;
+            if (obj.GetComponent<DrumGameObj>().drumType == drumType)
+            {
+                Vector4 norm = planeObjects[index];
+                myList.Add(new Vector2((norm.z + norm.x)/2f,(norm.w + norm.y)/2f));
+            }
+        }
+        return myList;
+    }
+
 
     public void playSound(Vector2 pos)
     {
@@ -47,7 +73,7 @@ public class PlaneKit : MonoBehaviour
                 gridMapEfx.spikeBloom();
                 if (isGamemode)
                 {
-                    print("Send to thing!");
+                    minigameCallBack(drumObjects[index].GetComponent<DrumGameObj>().drumType);
                 }
             }
         }

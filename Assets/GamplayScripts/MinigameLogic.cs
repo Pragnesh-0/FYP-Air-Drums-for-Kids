@@ -4,6 +4,7 @@ using System;
 public class MinigameLogic : MonoBehaviour
 {
     public bool isActive = false;
+    bool hasReset = false;
 
     Action resetBeats;
 
@@ -11,7 +12,7 @@ public class MinigameLogic : MonoBehaviour
     public int currentScore = 0;
     public List<BeatData> beats = new List<BeatData>();
     public Dictionary<BeatData,List<GameObject>> beatsDict = new Dictionary<BeatData, List<GameObject>>();
-
+    public GameObject beatItem;
 
 
     public MinigamePlayerGui playerGui;
@@ -21,6 +22,7 @@ public class MinigameLogic : MonoBehaviour
     void Start()
     {
         playerGui.setCloseCallback(delegate{resetVals();});
+        drumPlayer.setOnHitCallback(delegate(string value) {drumHit(value);});
     }
 
     void Update()
@@ -39,9 +41,16 @@ public class MinigameLogic : MonoBehaviour
             if (getAudioSourceTime() >= beat.time - 0.8f)
             {
                 indexToRemove = index;
-                print(getAudioSourceTime());
                 List<GameObject> gms = new List<GameObject>();
-                //spawn item
+                List<Vector2> positions = drumPlayer.getPositions(beat.type);
+                Dictionary<GameObject, Vector2> posStuff = new Dictionary<GameObject, Vector2>();
+                foreach (Vector2 pos in positions)
+                {
+                    GameObject b = Instantiate(beatItem);
+                    gms.Add(b);
+                    posStuff[b] = pos * new Vector2(Screen.width, Screen.height);
+                }
+                playerGui.addBeatObjects(posStuff, beat.time - getAudioSourceTime());
                 beatsDict.Add(beat, gms);
                 break;
             }
@@ -57,7 +66,8 @@ public class MinigameLogic : MonoBehaviour
         {
             isActive = false;
             saveScore();
-            playerGui.finished();
+            playerGui.finishedEffect();
+            print(currentScore);
         }
     }
 
@@ -70,29 +80,30 @@ public class MinigameLogic : MonoBehaviour
     {
         musicPlayer.Stop();
         isActive = false;
+        drumPlayer.resetValues();
         beats = new List<BeatData>();
         beatsDict = new Dictionary<BeatData, List<GameObject>>();
         currentScore = 0;
         if(resetBeats != null)
         {
             resetBeats();
-            resetBeats = null;
         }
+        hasReset = true;
     }
 
     public void initalize(BeatmapModels bmp, string name , Action resetBeat)
     {
         beats = bmp.beats;
         songName = name;
-        //scoreLabel.SetText("");
-
         resetBeats = resetBeat;
     }
 
     public async void playMinigame()
     {
-        await playerGui.countDown();
-        //drumPlayer.setValues(true);
+        hasReset = false;
+        drumPlayer.setValues(true);
+        await playerGui.readyUI();
+        if(hasReset){ hasReset = false; return;}
         musicPlayer.Play();
         isActive = true;
     }
@@ -105,14 +116,34 @@ public class MinigameLogic : MonoBehaviour
             if (key.time+0.05 < getAudioSourceTime())
             {
                 beatsDict.Remove(key);
+                continue;
             }
             if (key.type == dType)
             {
                 if (getAudioSourceTime() < key.time+0.05)
                 {
-                    currentScore += 100 - (int)((key.time+0.05 - getAudioSourceTime())* 125);
-                    //effects
-                    //destroy objects
+                    float timeDiff = (float)(key.time+0.05 - getAudioSourceTime());
+                    int score;
+                    List<GameObject> beats = beatsDict[key];
+                    switch (timeDiff)
+                    {
+                        case <= 0.3f:
+                            score = 100;
+                            break;
+                        case > 0.3f:
+                            score = 75;
+                            break;
+                        default: 
+                            score = 25;
+                            break;
+                    }
+                    foreach(GameObject beatObj in beats)
+                    {
+
+                        if(beatObj){ beatObj.GetComponent<CircleClosing>().scoreNotif(score.ToString()); }
+                    }
+                    currentScore += score;
+                    playerGui.addScore(currentScore.ToString());
                     beatsDict.Remove(key);
                 }
             }

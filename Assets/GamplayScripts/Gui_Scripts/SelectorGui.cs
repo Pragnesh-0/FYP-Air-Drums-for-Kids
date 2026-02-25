@@ -17,6 +17,9 @@ public class SelectorGui : MonoBehaviour
 
     public MinigameLogic mgl;
 
+
+    string currentSelectedSong;
+
     void Start()
     {
         playButton.onClick.AddListener(delegate{pressedPlay();});
@@ -42,8 +45,8 @@ public class SelectorGui : MonoBehaviour
     void pressedPlay()
     {
         libraryPop.SetActive(false);
-        gms.selectGui("MinigamePlayer");
         mgl.playMinigame();
+        gms.selectGui("MinigamePlayer");
     }
 
 }
