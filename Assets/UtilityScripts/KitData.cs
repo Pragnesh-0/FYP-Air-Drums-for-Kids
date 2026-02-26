@@ -166,6 +166,9 @@ public class KitData : MonoBehaviour
                         }
                     }
                 }
+                Settings userSettings = SettingsData.getSettings();
+                userSettings.equippedKit = kName;
+                SettingsData.saveSettings(userSettings);
                 return;
             }
         }

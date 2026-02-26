@@ -130,9 +130,11 @@ public class MinigameLogic : MonoBehaviour
                         case <= 0.3f:
                             score = 100;
                             break;
-                        case > 0.3f:
+                        case > 0.3f and < 0.7f:
                             score = 75;
                             break;
+                        case >= 0.7f:
+                            continue;
                         default: 
                             score = 25;
                             break;
