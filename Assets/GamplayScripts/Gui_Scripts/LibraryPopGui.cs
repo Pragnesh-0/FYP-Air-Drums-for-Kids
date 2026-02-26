@@ -17,6 +17,7 @@ public class LibraryPopGui : MonoBehaviour
 
     public AudioSource musicSource;
     public AlertBox alertB;
+    public GameObject downloadNotif;
 
     public GameObject content;
 
@@ -46,16 +47,14 @@ public class LibraryPopGui : MonoBehaviour
             return;
         } 
         downloading = true;
+        downloadNotif.SetActive(true);
         bool val = await NetworkingStuff.GetData(ipAddress,n);
         downloading = false;
         if (!val)
         {
             alertB.alert("Something went wrong..");
         }
-        else
-        {
-            alertB.alert("Success..");
-        }
+        downloadNotif.SetActive(false);
         reqServer(ipAddress);
     }
 

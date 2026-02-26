@@ -33,23 +33,31 @@ public class CircleClosing : MonoBehaviour
         while (timeElapsed < timer)
         {
             timeElapsed += Time.deltaTime;
-            ring.localScale = (Vector2.one * 2f) - (Vector2.one * (timeElapsed/timer));
+            ring.localScale = (Vector3.one * 2f) - (Vector3.one * (timeElapsed/timer));
             await Awaitable.NextFrameAsync();
         }
     }
 
     async Awaitable showValue()
     {
-        score.gameObject.SetActive(true);
-        circle.SetActive(false);
         float timeElapsed = 0;
+        float timeElapsed2 = 0;
+        RectTransform circleT =  circle.GetComponent<RectTransform>();
         RectTransform label = score.gameObject.GetComponent<RectTransform>();
         Vector2 startPos = label.localPosition;
-        while (timeElapsed < 1f)
+        while (timeElapsed2 < 0.1f)
+        {
+            timeElapsed2 += Time.deltaTime;
+            circleT.localScale = Vector3.one - (Vector3.one * (timeElapsed2/0.1f));
+            await Awaitable.NextFrameAsync();
+        }
+        circle.SetActive(false);
+        score.gameObject.SetActive(true);
+        while (timeElapsed < 0.8f)
         {
             timeElapsed += Time.deltaTime;
-            label.localPosition = startPos + (new Vector2(0, timeElapsed/1f)*150f);
-            label.localScale = Vector2.one - (Vector2.one * 0.75f * (timeElapsed/1f));
+            label.localPosition = startPos + (new Vector2(0, timeElapsed/0.8f)*150f);
+            label.localScale = (Vector3.one * 2f) - (Vector3.one * 1.75f * (timeElapsed/0.8f));
             await Awaitable.NextFrameAsync();
         }
     }

@@ -20,6 +20,7 @@ public class BetterDetection : MonoBehaviour
 
     
     public RectTransform stick;
+    public StickObject3D stickObject;
 
 
     public PlaneKit pk;
@@ -71,6 +72,7 @@ public class BetterDetection : MonoBehaviour
             return;
         }
         stick.position = stickpos * new Vector2(Screen.width, Screen.height);
+        if (stickObject) stickObject.changePosition(stickpos);
     }
 
  

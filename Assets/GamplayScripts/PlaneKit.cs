@@ -18,6 +18,7 @@ public class PlaneKit : MonoBehaviour
     public List<Vector4> planeObjects;
     public bool isGamemode;
 
+    public GameObject sticks;
     public GridMapEffect gridMapEfx;
     public void setValues(bool isgm)
     {
@@ -28,6 +29,7 @@ public class PlaneKit : MonoBehaviour
         planeObjects = DrumKit2dData.planeData(equippedKit);
         cvd.cameraAction(true);
         isGamemode = isgm;
+        sticks.SetActive(true);
     }
 
     public void resetValues()
@@ -36,6 +38,7 @@ public class PlaneKit : MonoBehaviour
         planeObjects = new List<Vector4>();
         cvd.cameraAction(false);
         isGamemode = false;
+        sticks.SetActive(false);
     }
 
     public void setOnHitCallback(Action<string> setOnHitCallback)

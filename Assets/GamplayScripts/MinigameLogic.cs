@@ -48,9 +48,9 @@ public class MinigameLogic : MonoBehaviour
                 {
                     GameObject b = Instantiate(beatItem);
                     gms.Add(b);
-                    posStuff[b] = pos * new Vector2(Screen.width, Screen.height);
+                    posStuff[b] = pos;
                 }
-                playerGui.addBeatObjects(posStuff, beat.time - getAudioSourceTime());
+                playerGui.addBeatObjects(posStuff, beat.time+0.1f - getAudioSourceTime());
                 beatsDict.Add(beat, gms);
                 break;
             }
@@ -113,16 +113,16 @@ public class MinigameLogic : MonoBehaviour
         List<BeatData> keyList = new List<BeatData>(beatsDict.Keys);
         foreach (BeatData key in keyList)
         {
-            if (key.time+0.05 < getAudioSourceTime())
+            if (key.time+0.1 < getAudioSourceTime())
             {
                 beatsDict.Remove(key);
                 continue;
             }
             if (key.type == dType)
             {
-                if (getAudioSourceTime() < key.time+0.05)
+                if (getAudioSourceTime() < key.time+0.1)
                 {
-                    float timeDiff = (float)(key.time+0.05 - getAudioSourceTime());
+                    float timeDiff = key.time+0.1f - getAudioSourceTime();
                     int score;
                     List<GameObject> beats = beatsDict[key];
                     switch (timeDiff)
@@ -139,7 +139,6 @@ public class MinigameLogic : MonoBehaviour
                     }
                     foreach(GameObject beatObj in beats)
                     {
-
                         if(beatObj){ beatObj.GetComponent<CircleClosing>().scoreNotif(score.ToString()); }
                     }
                     currentScore += score;

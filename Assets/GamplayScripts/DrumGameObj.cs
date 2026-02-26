@@ -11,7 +11,7 @@ public class DrumGameObj : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //rotation here
+        actualDrum.transform.LookAt(Camera.main.transform.position, Vector2.up);
     }
 
     public void onHit()

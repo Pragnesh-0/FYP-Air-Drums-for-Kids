@@ -112,7 +112,7 @@ public class MinigamePlayerGui : MonoBehaviour
         foreach(GameObject b in new List<GameObject>(bs.Keys))
         {
             b.transform.SetParent(beatPanel.transform, false);
-            b.GetComponent<RectTransform>().position = bs[b];
+            b.GetComponent<RectTransform>().localPosition = bs[b] * new Vector2(beatPanel.GetComponent<RectTransform>().rect.width, beatPanel.GetComponent<RectTransform>().rect.height);
             b.SetActive(true);
             b.GetComponent<CircleClosing>().activateObj(timer);
         }
