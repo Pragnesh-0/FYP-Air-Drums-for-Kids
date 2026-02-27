@@ -42,7 +42,6 @@ public class DrumGameObj : MonoBehaviour
             await Awaitable.NextFrameAsync();
         }
         actualDrum.transform.localScale = new Vector3(1, 1, 1);
-        print("Hit!");
     }
 
     public void setDrumText(string dText)

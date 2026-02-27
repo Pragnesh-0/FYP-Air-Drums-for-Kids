@@ -67,7 +67,6 @@ public class MinigameLogic : MonoBehaviour
             isActive = false;
             saveScore();
             playerGui.finishedEffect();
-            print(currentScore);
         }
     }
 
