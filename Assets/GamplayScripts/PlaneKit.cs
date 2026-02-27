@@ -74,6 +74,7 @@ public class PlaneKit : MonoBehaviour
             {
                 drumObjects[index].GetComponent<AudioSource>().PlayOneShot(drumObjects[index].GetComponent<AudioSource>().clip);
                 gridMapEfx.spikeBloom();
+                drumObjects[index].GetComponent<DrumGameObj>().onHit();
                 if (isGamemode)
                 {
                     minigameCallBack(drumObjects[index].GetComponent<DrumGameObj>().drumType);

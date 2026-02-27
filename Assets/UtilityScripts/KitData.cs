@@ -159,6 +159,7 @@ public class KitData : MonoBehaviour
                             drumCopy.GetComponent<AudioSource>().outputAudioMixerGroup = am;
                             drumCopy.transform.localPosition = drum.position;
                             drumCopy.name = drum.name;
+                            drumCopy.GetComponent<DrumGameObj>().setDrumText(drum.name);
                             drumCopy.GetComponent<Transform>().localScale = Vector3.one * drum.size;
                             drumCopy.GetComponent<AudioSource>().volume = drum.volume;
                             drumCopy.GetComponent<AudioSource>().panStereo = drum.panStereo;

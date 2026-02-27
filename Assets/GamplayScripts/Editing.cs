@@ -150,6 +150,7 @@ public class Editing : MonoBehaviour
         if (selectedDrum)
         {
             selectedDrum.name = value;
+            selectedDrum.GetComponent<DrumGameObj>().setDrumText(value);
         }
     }
 
