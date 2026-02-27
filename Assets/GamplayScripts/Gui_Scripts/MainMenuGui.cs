@@ -17,7 +17,8 @@ public class MainMenuGui : MonoBehaviour
     public Button cycleRight;
     public Button settingsButton;
     public Button minigameButton;
-
+    public Button tutorialButton;
+    public Button quitButton;
     public Button playBytton;
 
 
@@ -40,6 +41,8 @@ public class MainMenuGui : MonoBehaviour
 
         settingsButton.onClick.AddListener(delegate{enableGui("Settings");});
         minigameButton.onClick.AddListener(delegate{enableGui("Minigame");});
+        tutorialButton.onClick.AddListener(delegate{enableGui("Tutorial");});
+        quitButton.onClick.AddListener(delegate{Application.Quit();});
     }
 
 
