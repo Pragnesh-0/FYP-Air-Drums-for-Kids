@@ -7085,7 +7085,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrumGameObj
   drumType: Kick
-  drumDescription: This is the kick drum, usually played with the feet!
+  drumDescription: The kick drum provides a low end thump and is played with a foot
+    pedal.
   actualDrum: {fileID: 670074343}
   drumText: {fileID: 1792210377}
   isCymbal: 0
@@ -9387,7 +9388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrumGameObj
   drumType: HTom
-  drumDescription: 
+  drumDescription: The high tom is the smallest tom with the highest pitch.
   actualDrum: {fileID: 1319464773}
   drumText: {fileID: 1436920769}
   isCymbal: 0
@@ -14686,7 +14687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrumGameObj
   drumType: Crash
-  drumDescription: 
+  drumDescription: The crash cymbal is a very dramatic crash sound.
   actualDrum: {fileID: 1908840550}
   drumText: {fileID: 1943302714}
   isCymbal: 0
@@ -20086,7 +20087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrumGameObj
   drumType: CHiHat
-  drumDescription: 
+  drumDescription: The closed hi hat produces a chick sound when played.
   actualDrum: {fileID: 782076283}
   drumText: {fileID: 975000206}
   isCymbal: 0
@@ -22025,7 +22026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrumGameObj
   drumType: Snare
-  drumDescription: 
+  drumDescription: The snare plays a cracking sound and is considered the backbeat.
   actualDrum: {fileID: 1747498613}
   drumText: {fileID: 1098382023}
   isCymbal: 0
@@ -28532,7 +28533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrumGameObj
   drumType: OHiHat
-  drumDescription: 
+  drumDescription: The open hi hat plays a sizzle sound.
   actualDrum: {fileID: 180748756}
   drumText: {fileID: 960175930}
   isCymbal: 0
@@ -31912,7 +31913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrumGameObj
   drumType: FTom
-  drumDescription: 
+  drumDescription: The foor tom produces a deep growl boom sound.
   actualDrum: {fileID: 219296626}
   drumText: {fileID: 972507401}
   isCymbal: 0
@@ -35662,7 +35663,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrumGameObj
   drumType: MTom
-  drumDescription: 
+  drumDescription: The middle tom is deeper than the high tom and provides a bridge
+    to the tones.
   actualDrum: {fileID: 1004911560}
   drumText: {fileID: 2057901842}
   isCymbal: 0
@@ -37065,7 +37067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrumGameObj
   drumType: Ride
-  drumDescription: 
+  drumDescription: The ride cymbal makes a ring or ping sound.
   actualDrum: {fileID: 1325839866}
   drumText: {fileID: 1773069705}
   isCymbal: 0
