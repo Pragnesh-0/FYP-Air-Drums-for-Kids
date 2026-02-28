@@ -108,11 +108,15 @@ public class MinigamePlayerGui : MonoBehaviour
 
     public void addBeatObjects(Dictionary<GameObject, Vector2> bs, float timer)
     {
-
+        bool isMany = bs.Count > 1? true : false;
         foreach(GameObject b in new List<GameObject>(bs.Keys))
         {
             b.transform.SetParent(beatPanel.transform, false);
             b.GetComponent<RectTransform>().localPosition = bs[b] * new Vector2(beatPanel.GetComponent<RectTransform>().rect.width, beatPanel.GetComponent<RectTransform>().rect.height);
+            if (isMany) {
+                b.transform.GetChild(0).GetComponent<Image>().color = Color.aquamarine;
+                b.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+            }
             b.SetActive(true);
             b.GetComponent<CircleClosing>().activateObj(timer);
         }

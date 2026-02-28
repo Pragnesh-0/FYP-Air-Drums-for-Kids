@@ -15,6 +15,9 @@ public class MinigameLogic : MonoBehaviour
     public GameObject beatItem;
 
 
+    public AudioSource cheerAudio;
+
+
     public MinigamePlayerGui playerGui;
     public PlaneKit drumPlayer;
     public AudioSource musicPlayer;
@@ -43,7 +46,7 @@ public class MinigameLogic : MonoBehaviour
                 indexToRemove = index;
                 List<GameObject> gms = new List<GameObject>();
                 List<Vector2> positions = drumPlayer.getPositions(beat.type);
-                Dictionary<GameObject, Vector2> posStuff = new Dictionary<GameObject, Vector2>();
+                Dictionary<GameObject, Vector2> posStuff = new Dictionary<GameObject, Vector2>(); 
                 foreach (Vector2 pos in positions)
                 {
                     GameObject b = Instantiate(beatItem);
@@ -67,6 +70,7 @@ public class MinigameLogic : MonoBehaviour
             isActive = false;
             saveScore();
             playerGui.finishedEffect();
+            cheerAudio.Play();
         }
     }
 
@@ -119,20 +123,20 @@ public class MinigameLogic : MonoBehaviour
             }
             if (key.type == dType)
             {
-                if (getAudioSourceTime() < key.time+0.1)
+                if (getAudioSourceTime() < key.time+0.15)
                 {
-                    float timeDiff = key.time+0.1f - getAudioSourceTime();
+                    float timeDiff = key.time+0.15f - getAudioSourceTime();
                     int score;
                     List<GameObject> beats = beatsDict[key];
                     switch (timeDiff)
                     {
-                        case <= 0.3f:
+                        case <= 0.35f:
                             score = 100;
                             break;
-                        case > 0.3f and < 0.7f:
+                        case > 0.35f and < 0.65f:
                             score = 75;
                             break;
-                        case >= 0.7f:
+                        case >= 0.65f:
                             continue;
                         default: 
                             score = 25;

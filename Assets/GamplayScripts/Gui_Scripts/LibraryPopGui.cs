@@ -19,6 +19,9 @@ public class LibraryPopGui : MonoBehaviour
     public AlertBox alertB;
     public GameObject downloadNotif;
 
+
+    public AudioSource downloadDone;
+
     public GameObject content;
 
 
@@ -50,6 +53,7 @@ public class LibraryPopGui : MonoBehaviour
         downloadNotif.SetActive(true);
         bool val = await NetworkingStuff.GetData(ipAddress,n);
         downloading = false;
+        downloadDone.Play();
         if (!val)
         {
             alertB.alert("Something went wrong..");
