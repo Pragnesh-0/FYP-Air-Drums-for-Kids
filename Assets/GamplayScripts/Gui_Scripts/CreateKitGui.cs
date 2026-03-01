@@ -29,6 +29,7 @@ public class CreateKitGui : MonoBehaviour
             alertBox.alert(d);
             return;
         }
+        drumName.text = "";
         guiSelector.selectGui("MainMenu");
         kitEditing.toggleEditing();
     }

@@ -183,6 +183,7 @@ public class Editing : MonoBehaviour
         }
         GameObject copy = Instantiate(drum_type);
         copy.name = drum_type.name;
+        copy.GetComponent<DrumGameObj>().setDrumText(drum_type.name);
         copy.transform.SetParent(currentKit.transform);
         copy.transform.position = currentKit.transform.position;
     }
