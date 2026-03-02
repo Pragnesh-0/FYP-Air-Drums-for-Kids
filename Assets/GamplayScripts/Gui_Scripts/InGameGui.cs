@@ -38,7 +38,7 @@ public class InGameGui : MonoBehaviour
         recordButton.onClick.AddListener(async delegate{ await captureData(); });
         replayButton.onClick.AddListener(delegate{ musicReplay(); });
         ppButtonMusic.onClick.AddListener(delegate{ musicPlayer(); });
-        backButton.onClick.AddListener(delegate{ cleanPlayer(); gameplayObject.resetValues(); menuSelector.selectGui("MainMenu");});
+        backButton.onClick.AddListener(delegate{gameplayObject.resetValues(); isCapturing = false; menuSelector.selectGui("MainMenu");});
     }
 
 
@@ -80,9 +80,11 @@ public class InGameGui : MonoBehaviour
         if(!Camera.main.GetComponent<AudioCapture>()){ isCapturing = false; return; }
         if (isCapturing) 
         {
+            recordButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Record");
             isCapturing = false;
             return;
         }
+        recordButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Stop");
         isCapturing = true;
         if(musicSource.isPlaying){cleanPlayer();}
         Camera.main.GetComponent<AudioCapture>().startCapture();
@@ -104,6 +106,7 @@ public class InGameGui : MonoBehaviour
         }
         isCapturing = false;
         List<float> data = Camera.main.GetComponent<AudioCapture>().getCapture();
+        recordButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Record");
         if(data.Count < 1) return;
         AudioClip ac = AudioClip.Create("clip", data.Count/2, 2, AudioSettings.outputSampleRate, false);
         ac.SetData(data.ToArray(),0);
@@ -149,8 +152,15 @@ public class InGameGui : MonoBehaviour
 
     void cleanPlayer()
     {
+        musicName.SetText("");
         library.SetActive(false);
         musicReplay();
         musicSource.clip = null;
+    }
+
+
+    void OnDisable()
+    {
+        cleanPlayer();
     }
 }
