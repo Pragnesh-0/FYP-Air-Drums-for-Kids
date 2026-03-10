@@ -121,6 +121,7 @@ public class InGameGui : MonoBehaviour
 
     void musicReplay()
     {
+        if(!musicSource) return;
         if (musicSource.clip == null) return;
         musicSource.Stop();
         buttonSprite.sprite = playSprite;
