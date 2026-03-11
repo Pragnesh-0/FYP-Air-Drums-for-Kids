@@ -156,6 +156,7 @@ public class InGameGui : MonoBehaviour
         musicName.SetText("");
         library.SetActive(false);
         musicReplay();
+        if(musicSource == null) return;
         musicSource.clip = null;
     }
 
