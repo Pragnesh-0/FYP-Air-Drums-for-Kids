@@ -2,9 +2,11 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class SelectorGui : MonoBehaviour
 {
+    public HoldButton deleteButton;
     public Button playButton;
     public AlertBox ab;
 
@@ -19,16 +21,19 @@ public class SelectorGui : MonoBehaviour
 
 
     string currentSelectedSong;
+    Action deleteCallback;
 
     void Start()
     {
         playButton.onClick.AddListener(delegate{pressedPlay();});
+        deleteButton.addHoldListener(delegate{deleteCallback(); MusicData.deleteMusic(currentSelectedSong); currentSelectedSong = null; deleteCallback = null;}, "Delete");
     }
 
 
-    public bool selectSong(string n)
+    public bool selectSong(string n, Action callback)
     {
         string file_name = Path.GetFileNameWithoutExtension(n);
+        currentSelectedSong = file_name;
         BeatmapModels bmp = BeatmapData.getBeatMap(file_name);
         if (bmp == null)
         {
@@ -37,7 +42,8 @@ public class SelectorGui : MonoBehaviour
         }
         score.SetText(bmp.score.ToString());
         musicName.SetText(file_name);
-        mgl.initalize(bmp, file_name , delegate{selectSong(n);});
+        deleteCallback = callback;
+        mgl.initalize(bmp, file_name , delegate{selectSong(n ,callback);});
         return true;
     }
 

@@ -115,7 +115,7 @@ public class LibraryPopGui : MonoBehaviour
         connecting = false;
         if (thisConnection != connectionId){ print("not the same!!"); return;};
         if(data == null) { alertB.alert("Couldn't get data!"); return;}
-        print(data);
+        //print(data);
         NetworkLibraryData list = JsonUtility.FromJson<NetworkLibraryData>(data);
         List<string> listData = list.names;
         HashSet<string> nodup = new HashSet<string>(MusicData.getAllMusic());

@@ -54,8 +54,13 @@ public static class MusicData
         Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "MusicData"));
         string dirName = Path.Combine(Application.persistentDataPath,"MusicData");
         string path = Path.Combine(dirName, fname+".mp3");
+        Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "BeatmapData"));
+        string dirNameB = Path.Combine(Application.persistentDataPath, "BeatmapData");
+        string filePathB = Path.Combine(dirNameB, fname+".json");
         if (!File.Exists(path)) return;
         File.Delete(path);
+        if(!File.Exists(filePathB)) return;
+        File.Delete(filePathB);
     }
     
 }
