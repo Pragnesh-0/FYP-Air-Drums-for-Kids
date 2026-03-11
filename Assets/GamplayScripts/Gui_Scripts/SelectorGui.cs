@@ -26,7 +26,7 @@ public class SelectorGui : MonoBehaviour
     void Start()
     {
         playButton.onClick.AddListener(delegate{pressedPlay();});
-        deleteButton.addHoldListener(delegate{deleteCallback(); MusicData.deleteMusic(currentSelectedSong); currentSelectedSong = null; deleteCallback = null;}, "Delete");
+        deleteButton.addHoldListener(delegate{MusicData.deleteMusic(currentSelectedSong); deleteCallback();  currentSelectedSong = null; deleteCallback = null;}, "Delete");
     }
 
 
