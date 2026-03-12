@@ -52,9 +52,9 @@ public class Editing : MonoBehaviour
             return;
         }
 
-        Vector2 p = Mouse.current.position.ReadValue();
+        Vector2 p = Pointer.current.position.ReadValue();
         
-        if (Mouse.current.leftButton.isPressed)
+        if (Pointer.current.press.isPressed)
         {
             if (EventSystem.current.IsPointerOverGameObject() && !moving) 
             {
@@ -79,7 +79,7 @@ public class Editing : MonoBehaviour
             }
         }
 
-        if (Mouse.current.leftButton.isPressed && selectedDrum)
+        if (Pointer.current.press.isPressed && selectedDrum)
         {
             if(EventSystem.current.currentSelectedGameObject != null || EventSystem.current.IsPointerOverGameObject() && !moving)
             {
@@ -90,7 +90,7 @@ public class Editing : MonoBehaviour
             selectedDrum.GetComponent<Transform>().position = Camera.main.ScreenToWorldPoint(new Vector3(p.x, p.y, 6f));
         }
 
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        if (Pointer.current.press.wasReleasedThisFrame)
         {
             if (selectedDrum && moving)
             {

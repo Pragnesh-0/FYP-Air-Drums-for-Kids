@@ -6,14 +6,15 @@ using System.IO;
 public class SettingsData: MonoBehaviour
 {
     
-
+    static string cachedSettings="";
 
     public static void saveSettings(Settings newSettings)
     {
-        if (JsonUtility.ToJson(newSettings) == JsonUtility.ToJson(getSettings()))
+        if (JsonUtility.ToJson(newSettings) == JsonUtility.ToJson(cachedSettings))
         {
             return;
         }
+        cachedSettings = JsonUtility.ToJson(newSettings);
         Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "Settings"));
         string path = Path.Combine(Application.persistentDataPath, "Settings");
         string data = JsonUtility.ToJson(newSettings);
