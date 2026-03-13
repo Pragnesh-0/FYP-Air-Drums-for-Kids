@@ -63,7 +63,8 @@ public class MinigameLogic : MonoBehaviour
         {
             beats.RemoveAt(indexToRemove);
         }
-            
+
+        playerGui.setDuration(getAudioSourceTime()/musicPlayer.clip.length);
 
         if (!musicPlayer.isPlaying && beats.Count == 0)
         {
@@ -99,6 +100,7 @@ public class MinigameLogic : MonoBehaviour
         beats = bmp.beats;
         songName = name;
         resetBeats = resetBeat;
+        playerGui.setDuration(0);
     }
 
     public async void playMinigame()

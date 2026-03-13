@@ -19,6 +19,22 @@ public static class BeatmapData
         return bmp;
     }
 
+    public static void setFav(string fname)
+    {
+        Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "BeatmapData"));
+        string dirName = Path.Combine(Application.persistentDataPath, "BeatmapData");
+        string filePath = Path.Combine(dirName, fname+".json");
+        BeatmapModels bmp;
+        if (!File.Exists(filePath))
+        {
+            return;
+        }
+        string data = File.ReadAllText(filePath);
+        bmp = JsonUtility.FromJson<BeatmapModels>(data);
+        bmp.fav = !bmp.fav;
+        File.WriteAllText(filePath, JsonUtility.ToJson(bmp));
+    }
+
 
     public static void saveScore(string fname, int score)
     {

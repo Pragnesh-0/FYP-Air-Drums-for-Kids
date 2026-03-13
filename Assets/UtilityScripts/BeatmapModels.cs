@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class BeatmapModels
 {
     public int score;
+    public bool fav;
     public List<BeatData> beats;
 }
 

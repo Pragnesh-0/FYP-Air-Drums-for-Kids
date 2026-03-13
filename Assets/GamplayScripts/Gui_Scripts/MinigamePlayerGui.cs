@@ -19,6 +19,7 @@ public class MinigamePlayerGui : MonoBehaviour
 
 
     public GameObject beatPanel;
+    public RectTransform progressBar;
 
 
     int count;
@@ -68,6 +69,12 @@ public class MinigamePlayerGui : MonoBehaviour
         scoreLabel.gameObject.SetActive(false);
         readyLabel.gameObject.SetActive(false);
         close.gameObject.SetActive(false);
+    }
+
+    
+    public void setDuration(float ratio)
+    {
+        progressBar.localScale = new Vector2(ratio, 1);
     }
 
     public async void addScore(string score)

@@ -78,7 +78,13 @@ public class LibraryPopGui : MonoBehaviour
             copy.name = n; copy.GetComponentInChildren<TextMeshProUGUI>().SetText(n2);
             currentList.Add(copy);
             copy.SetActive(true);
-            if (!isDownloadable) copy.GetComponentInChildren<Button>().onClick.AddListener(async delegate{await addSelectionAction(n, setMusicCallback);});
+            if (!isDownloadable){
+                if (BeatmapData.getBeatMap(n2) != null && BeatmapData.getBeatMap(n2).fav)
+                {
+                    copy.transform.GetChild(2).gameObject.SetActive(true);
+                }
+                copy.GetComponentInChildren<Button>().onClick.AddListener(async delegate{await addSelectionAction(n, setMusicCallback);});
+            }
             if (isDownloadable) copy.GetComponentInChildren<Button>().onClick.AddListener(async delegate{await addDownloadAction(n, ipAddress);});
             index+=1;
         }

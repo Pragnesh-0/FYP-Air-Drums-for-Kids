@@ -20,8 +20,7 @@ public class MainMenuGui : MonoBehaviour
     public Button tutorialButton;
     public Button quitButton;
     public Button playBytton;
-
-
+    public Button favButton;
 
     public PlaneKit loadHitboxes;
 
@@ -37,6 +36,7 @@ public class MainMenuGui : MonoBehaviour
         createButton.onClick.AddListener(delegate{create();});
         cycleLeft.onClick.AddListener(delegate{if(Time.time < cycleDebounce){return;} kitData.cycleKit(false);  cycleDebounce = Time.time + 0.5f;});
         cycleRight.onClick.AddListener(delegate{if(Time.time < cycleDebounce){return;} kitData.cycleKit(true);  cycleDebounce = Time.time + 0.5f;});
+        favButton.onClick.AddListener(delegate {kitData.setFav();});
         playBytton.onClick.AddListener(delegate{playMain();});
 
         settingsButton.onClick.AddListener(delegate{enableGui("Settings");});

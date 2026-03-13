@@ -5,6 +5,8 @@ public class KitClass
 {
     public List<DrumClass> drums;
     public string name;
+
+    public bool isFavorite;
 }
 
 [System.Serializable]

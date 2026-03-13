@@ -3,11 +3,13 @@ using System.IO;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Threading.Tasks;
 
 public class SelectorGui : MonoBehaviour
 {
     public HoldButton deleteButton;
     public Button playButton;
+    public Button fav;
     public AlertBox ab;
 
     public TextMeshProUGUI score;
@@ -21,16 +23,17 @@ public class SelectorGui : MonoBehaviour
 
 
     string currentSelectedSong;
-    Action deleteCallback;
+    Action<bool> reloadCallback;
 
     void Start()
     {
         playButton.onClick.AddListener(delegate{pressedPlay();});
-        deleteButton.addHoldListener(delegate{MusicData.deleteMusic(currentSelectedSong); deleteCallback();  currentSelectedSong = null; deleteCallback = null;}, "Delete");
+        deleteButton.addHoldListener(delegate{MusicData.deleteMusic(currentSelectedSong); reloadCallback(true);  currentSelectedSong = null; reloadCallback = null;}, "Delete");
+        fav.onClick.AddListener(delegate{ BeatmapData.setFav(currentSelectedSong); reloadCallback(false); selectSong(currentSelectedSong , reloadCallback);});
     }
 
 
-    public bool selectSong(string n, Action callback)
+    public bool selectSong(string n, Action<bool> _reloadCallback)
     {
         string file_name = Path.GetFileNameWithoutExtension(n);
         currentSelectedSong = file_name;
@@ -42,8 +45,8 @@ public class SelectorGui : MonoBehaviour
         }
         score.SetText(bmp.score.ToString());
         musicName.SetText(file_name);
-        deleteCallback = callback;
-        mgl.initalize(bmp, file_name , delegate{selectSong(n ,callback);});
+        reloadCallback = _reloadCallback;
+        mgl.initalize(bmp, file_name , delegate{selectSong(n ,reloadCallback);});
         return true;
     }
 

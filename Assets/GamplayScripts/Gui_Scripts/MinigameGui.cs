@@ -43,7 +43,14 @@ public class MinigameGui : MonoBehaviour
 
     public void addToSelector(string val)
     {
-        bool value = musicPanel.GetComponent<SelectorGui>().selectSong(val, delegate {musicPanel.gameObject.SetActive(false); musicSelectorGui();});
+        bool value = musicPanel.GetComponent<SelectorGui>().selectSong(val, delegate(bool v) {
+            if (v)
+            {
+                musicPanel.gameObject.SetActive(false); 
+            }
+            
+            musicSelectorGui();
+        });
         musicPanel.gameObject.SetActive(value);
     }
 

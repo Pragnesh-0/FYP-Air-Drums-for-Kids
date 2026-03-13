@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine.Audio;
 
 public class KitData : MonoBehaviour
@@ -15,6 +16,10 @@ public class KitData : MonoBehaviour
 
     public TextMeshProUGUI kitNameE;
     public TextMeshProUGUI kitNameM;
+    public RectTransform favStar;
+
+    Color notFaved = Color.white;
+    Color faved = Color.yellow;
 
     public AudioMixerGroup am;
 
@@ -45,6 +50,7 @@ public class KitData : MonoBehaviour
         KitClass saveKit = new KitClass();
         saveKit.drums = drums;
         saveKit.name = "Default";
+        saveKit.isFavorite = false;
 
         return saveKit;
     }
@@ -112,7 +118,14 @@ public class KitData : MonoBehaviour
         KitClass saveKit = new KitClass();
         saveKit.drums = drums;
         saveKit.name = kName;
-
+        saveKit.isFavorite = false;
+        foreach (KitClass k in kitClasses)
+        {
+            if (k.name == kName)
+            {
+                saveKit.isFavorite = k.isFavorite;
+            }
+        }
         string data = JsonUtility.ToJson(saveKit);
         File.WriteAllText(Path.Combine(path,kName+".json"), data);
         loadKits();
@@ -167,12 +180,37 @@ public class KitData : MonoBehaviour
                         }
                     }
                 }
+                if(kName != "Default")
+                {
+                    favStar.gameObject.SetActive(true);
+                    favStar.GetComponent<Image>().color = kit.isFavorite ? faved : notFaved;
+                }
+                else
+                {
+                    favStar.gameObject.SetActive(false);
+                }
                 Settings userSettings = SettingsData.getSettings();
                 userSettings.equippedKit = kName;
                 SettingsData.saveSettings(userSettings);
                 return;
             }
         }
+    }
+
+    public void setFav()
+    {
+        if (kitName == "Default")
+        {
+            return;
+        }
+        foreach (KitClass kit in kitClasses)
+        {
+            if (kit.name == kitName)
+            {
+                kit.isFavorite = !kit.isFavorite;
+            }
+        }
+        saveKit(kitName, true);
     }
 
     public void cycleKit(bool add)
