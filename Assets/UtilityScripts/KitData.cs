@@ -4,6 +4,7 @@ using System.IO;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using System.Text;
 
 public class KitData : MonoBehaviour
 {
@@ -68,6 +69,64 @@ public class KitData : MonoBehaviour
             KitClass data = JsonUtility.FromJson<KitClass>(jsonData);
             kitClasses.Add(data);
         }
+    }
+
+    public bool loadFromCode(string code)
+    {
+        KitClass kit = new KitClass();
+        try
+        {
+            byte[] bytes_data = System.Convert.FromBase64String(code);
+            string json_data = Encoding.UTF8.GetString(bytes_data);
+            kit = JsonUtility.FromJson<KitClass>(json_data);
+        }
+        catch
+        {
+            return false;
+        }
+            
+        kit.name = "";
+        kit.isFavorite = false;
+        foreach(Transform kd in equippedKit.GetComponent<Transform>())
+        {
+            Destroy(kd.gameObject);
+        }
+        foreach(DrumClass drum in kit.drums)
+        {
+            foreach(Transform availableDrum in availableDrums.GetComponent<Transform>())
+            {
+                if (drum.type == availableDrum.gameObject.name)
+                {
+                    GameObject drumCopy = Instantiate(availableDrum.gameObject);
+                    drumCopy.transform.SetParent(equippedKit.transform);
+                    drumCopy.GetComponent<AudioSource>().outputAudioMixerGroup = am;
+                    drumCopy.transform.localPosition = drum.position;
+                    drumCopy.name = drum.name;
+                    drumCopy.GetComponent<DrumGameObj>().setDrumText(drum.name);
+                    drumCopy.GetComponent<Transform>().localScale = Vector3.one * drum.size;
+                    drumCopy.GetComponent<AudioSource>().volume = drum.volume;
+                    drumCopy.GetComponent<AudioSource>().panStereo = drum.panStereo;
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+
+    public string getCode()
+    {
+        KitClass curKit = new KitClass();
+        foreach (KitClass data in kitClasses)
+        {
+            if (data.name == kitName)
+            {
+                curKit = data;
+            }
+        }
+        string json_data = JsonUtility.ToJson(curKit);
+        byte[] bytes_data = Encoding.UTF8.GetBytes(json_data);
+        string code = System.Convert.ToBase64String(bytes_data);
+        return code;
     }
 
     public string saveKit(string kName, bool bsave)

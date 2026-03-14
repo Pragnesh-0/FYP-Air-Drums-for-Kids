@@ -6,6 +6,7 @@ public class CreateKitGui : MonoBehaviour
 {
     
     public Button createButton;
+    public Button pasteCodeButton;
     public TMP_InputField drumName;
 
 
@@ -18,6 +19,7 @@ public class CreateKitGui : MonoBehaviour
     void Start()
     {
         createButton.onClick.AddListener(delegate {createKit();});
+        pasteCodeButton.onClick.AddListener(delegate {pasteCode();});
     }
 
 
@@ -32,5 +34,14 @@ public class CreateKitGui : MonoBehaviour
         drumName.text = "";
         guiSelector.selectGui("MainMenu");
         kitEditing.toggleEditing();
+    }
+
+    public void pasteCode()
+    {
+        if (!kitStuff.loadFromCode(GUIUtility.systemCopyBuffer))
+        {
+            alertBox.alert("Invalid code was given!");
+        }
+        ;
     }
 }
