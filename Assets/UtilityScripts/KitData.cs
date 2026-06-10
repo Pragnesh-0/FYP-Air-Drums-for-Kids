@@ -84,6 +84,11 @@ public class KitData : MonoBehaviour
         {
             return false;
         }
+
+        if(kit == null)
+        {
+            return false;
+        }
             
         kit.name = "";
         kit.isFavorite = false;
